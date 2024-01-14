@@ -1,0 +1,24 @@
+---
+- name: Install Nginx
+  hosts: servers
+  become: yes
+  become_user: root
+  become_method: sudo
+
+  tasks:
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: Default replacement
+      template:
+        src: /home/user/hosts/default
+        dest: /etc/nginx/sites-available/default
+      notify: Restart Nginx
+
+  handlers:
+    - name: Restart Nginx
+      service:
+        name: nginx
+        state: restarted

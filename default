@@ -1,0 +1,13 @@
+upstream application{
+      server 192.168.0.111:3000;
+      server 192.168.0.112:3000;
+   }
+
+   server {
+      listen 80;
+
+
+      location / {
+          proxy_pass http://application;
+      }
+   }
